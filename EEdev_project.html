@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Songstrike</title>
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg"> <!-- lehe ikoon \ page icon -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1 id="logo" role="button" tabindex="0" data-i18n-title="home" data-i18n-aria="home">Song<span>strike</span></h1>
+    <div class="bar" role="toolbar" data-i18n-aria="toolbar" aria-label="Настройки">
+      <button class="chip" id="pasteToggle" data-i18n="paste">✎ Своя песня</button>
+      <span class="sep"></span>
+      <div class="lang-wrap"><button class="chip" id="langBtn" aria-haspopup="true" aria-expanded="false" data-i18n-title="lang"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.7 3.9 5.9 3.9 9.5s-1.3 6.8-3.9 9.5c-2.6-2.7-3.9-5.9-3.9-9.5s1.3-6.8 3.9-9.5z"/></svg><span data-i18n="lang_btn">Язык</span><span class="arr" aria-hidden="true">▾</span></button><ul class="lang-menu" id="langMenu" hidden><li><button type="button" data-l="ru" lang="ru">Русский</button></li><li><button type="button" data-l="en" lang="en">English</button></li><li><button type="button" data-l="fr" lang="fr">Français</button></li><li><button type="button" data-l="es" lang="es">Español</button></li><li><button type="button" data-l="de" lang="de">Deutsch</button></li><li><button type="button" data-l="it" lang="it">Italiano</button></li><li><button type="button" data-l="et" lang="et">Eesti</button></li><li><button type="button" data-l="lt" lang="lt">Lietuvių</button></li><li><button type="button" data-l="fi" lang="fi">Suomi</button></li></ul></div>
+      <span class="sep"></span>
+      <button class="chip theme-btn" id="themeBtn" data-i18n-aria="theme" data-i18n-title="theme">☾</button>
+    </div>
+  </header>
+
+  <section class="paste" id="pastePanel" hidden>
+    <span class="lbl" data-i18n="paste_head">Своя песня</span>
+    <input type="text" id="pasteTitle" data-i18n-ph="ph_title">
+    <input type="url" id="pasteYt" data-i18n-ph="ph_yt">
+    <textarea id="pasteText" spellcheck="false" data-i18n-ph="ph_text"></textarea>
+    <div class="actions" style="justify-content:flex-start">
+      <button class="btn primary" id="pasteGo" data-i18n="go">Печатать этот текст</button>
+      <button class="btn" id="pasteCancel" data-i18n="cancel">Отмена</button>
+    </div>
+  </section>
+
+  <section class="player" id="playerBox">
+    <div class="video"><div class="noplayer" id="noVideo" data-i18n="novideo">Вставь справа ссылку на клип с ютуба, и видео появится здесь</div><div id="yt"></div></div>
+    <div class="pctl">
+      <div class="row">
+        <input type="url" id="ytUrl" data-i18n-ph="ph_yturl" data-i18n-aria="ytaria">
+        <button class="btn" id="ytLoad" data-i18n="load">Загрузить</button>
+      </div>
+      <div class="row"><input type="text" id="lyrQ" data-i18n-ph="ph_q" data-i18n-aria="ph_q"><button class="btn primary" id="findLyr" type="button" data-i18n="find">🔍 Найти текст</button></div>
+      <div class="lyr-status" id="lyrStatus" aria-live="polite"></div>
+      <div class="lyr-list" id="lyrList"></div>
+      <div class="row">
+        <button class="btn" id="pPlay">▶ / ⏸ <kbd>Ctrl+Enter</kbd></button>
+        <button class="btn" id="pBack">−5 <span data-i18n="s">с</span> <kbd>Ctrl+←</kbd></button>
+        <button class="btn" id="pFwd">+5 <span data-i18n="s">с</span> <kbd>Ctrl+→</kbd></button>
+      </div>
+      <div class="row">
+        <label for="pRate" data-i18n="rate">Скорость песни</label>
+        <select id="pRate"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option></select>
+        <kbd>Ctrl+↑</kbd><kbd>Ctrl+↓</kbd>
+      </div>
+      <div class="row">
+        <label><input type="checkbox" id="pAuto" checked> <span data-i18n="auto">Автопауза, если не печатаю</span></label>
+        <select id="pAutoSec" data-i18n-aria="auto_t"><option value="2">2 с</option><option value="3" selected>3 с</option><option value="5">5 с</option></select>
+      </div>
+      <div class="paused-note" id="pNote"></div>
+    </div>
+  </section>
+
+  <div class="counters" aria-live="off">
+    <span><b id="cWpm">0</b><small data-i18n="cpm">зн/мин</small></span>
+    <span><b id="cAcc">100</b><small data-i18n="acc">% точность</small></span>
+    <span><b id="cProg">0/0</b><small data-i18n="words">слов</small></span>
+    <span class="song-label" id="songLabel"></span>
+  </div>
+  <div class="typebar">
+    <button class="chip" id="optPunct" aria-pressed="false" data-i18n="punct" data-i18n-title="punct_t">, знаки</button>
+    <button class="chip" id="optCaps" aria-pressed="false" data-i18n="caps" data-i18n-title="caps_t">Aa заглавные</button>
+    <span class="tb-sep"></span>
+    <button class="chip" id="restart"><span data-i18n="restart">↻ Заново</span> <kbd>Ctrl + R</kbd></button>
+  </div>
+
+  <section class="typing" id="typing" data-i18n-aria="typing">
+    <div class="text" id="text"><div class="inner" id="inner"></div><div class="caret" id="caret"></div></div>
+    <div class="blur-note" id="blur" data-i18n="blur" hidden>Нажми сюда или на любую клавишу, чтобы продолжить</div>
+    <input id="hidden" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-i18n-aria="input">
+  </section>
+
+
+  <section class="result" id="result" hidden>
+    <div class="big">
+      <div><div class="k" data-i18n="r_speed">скорость</div><div class="v" id="rCpm">0</div><div class="k" style="margin-top:4px" data-i18n="r_cpm">знаков в минуту</div></div>
+      <div><div class="k" data-i18n="r_acc">точность</div><div class="v" id="rAcc">0%</div></div>
+    </div>
+    <div style="min-width:0">
+      <svg class="chart" id="chart" viewBox="0 0 600 150" preserveAspectRatio="none" data-i18n-aria="chart"></svg>
+      <div class="minis">
+        <div><div class="k" data-i18n="r_wpm">слов/мин</div><div class="v" id="rWpm">0</div></div>
+        <div><div class="k" data-i18n="r_time">время</div><div class="v" id="rTime">0:00</div></div>
+        <div><div class="k" data-i18n="r_err">ошибок</div><div class="v" id="rErr">0</div></div>
+        <div><div class="k" data-i18n="r_chars">символов</div><div class="v" id="rChars">0</div></div>
+      </div>
+      <div class="best" id="rBest"></div>
+    </div>
+  </section>
+
+  <p class="foot" data-i18n="foot"></p>
+  
+<footer class="contacts">
+<span class="contacts-name">© 2026 hudya</span>
+<a href="https://github.com/hudyagod" target="_blank" rel="noopener">GitHub</a>
+<a href="https://t.me/kinghudya" target="_blank" rel="noopener">Telegram</a>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=hudyamain@gmail.com&su=Songstrike feedback/idea for improvement" target="_blank" rel="noopener">E-mail</a>
+  
+</footer>
+
+<p class="beta">This site is in beta. We would love to hear your ideas for its future development!</p>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
