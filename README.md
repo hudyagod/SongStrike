@@ -1,5 +1,12 @@
 # SongStrike
 
+[![HTML5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)&nbsp;
+[![CSS3](https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)&nbsp;
+[![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)&nbsp;
+[![YouTube API](https://img.shields.io/badge/youtube%20api-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://developers.google.com/youtube/iframe_api_reference)&nbsp;
+[![LRCLIB](https://img.shields.io/badge/lrclib-222222?style=for-the-badge&logo=musicbrainz&logoColor=white)](https://lrclib.net/)&nbsp;
+[![GitHub Pages](https://img.shields.io/badge/github%20pages-222222?style=for-the-badge&logo=githubpages&logoColor=white)](https://pages.github.com/)
+
 [English](#english) | [Eesti keel](#eesti-keel) | [Русский язык](#русский-язык)
 
 Website: https://hudyagod.github.io/SongStrike/EEdev_project.html
